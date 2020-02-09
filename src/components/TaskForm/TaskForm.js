@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addTask } from "../redux/actions";
+import { addTask } from "../../store/actions/tasks";
 
 
 class TaskForm extends Component {

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Task from './Task';
+import Task from '../Task/Task';
 import { connect } from 'react-redux';
 
 
 class Tasks extends Component {
   render(){
+    
     const tasks = this.props.tasks.map( task =>
       <Task key={task.id} task={task} />
     )
@@ -16,10 +17,10 @@ class Tasks extends Component {
       {list = <ul className="list-group">{tasks}</ul> }     
 
     return (
-      <div>
-        <h4 className="mb-3">Tasks list: {this.props.tasks.length}</h4>
+      <>
+        <h4 className="mb-3">Tasks: {this.props.tasks.length}</h4>
         {list}
-      </div>
+      </>
     )
   }
 }
@@ -30,7 +31,7 @@ Tasks.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    tasks: state.tasks
+    tasks: state.tasks.tasks
   }
 }
 

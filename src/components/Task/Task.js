@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { removeTask, toggleTask } from "../redux/actions";
+import { removeTask, toggleTask } from "../../store/actions/tasks";
 
 class Task extends Component {
 
   render(){
     const {task} = this.props;
-    console.log(task);
     
+    const doneStyles = {
+      textDecoration: 'line-through',
+      color: 'gray',
+    }   
     
     return (
       <li className="list-group-item">
-        <input type="checkbox" onChange={this.props.toggleTask.bind(this, task.id)} className="mr-2" />
-        {task.title}{task.done ? 'a' : 'b'}
-        <button onClick={this.props.removeTask.bind(this, task.id)} className="btn btn-sm text-danger float-right">&times;</button>       
+        <div>
+          <input type="checkbox" checked={task.done} onChange={this.props.toggleTask.bind(this, task.id)} className="mr-2" />
+          <span style={task.done ? doneStyles : {}}>{task.title}</span>
+          <button onClick={this.props.removeTask.bind(this, task.id)} className="btn btn-sm text-danger float-right">&times;</button>
+        </div>    
+        <p>{task.description}</p>   
       </li>
     )
   }

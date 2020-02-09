@@ -1,6 +1,7 @@
+import { ADD_TASK } from '../types/tasks';
 
 export const addTask = payload => ({
-  type: 'ADD_TASK',
+  type: ADD_TASK,
   payload,
 })
 
