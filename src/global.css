@@ -9,7 +9,7 @@
 
 body {
   font-family: 'Lato', 'Helvetica Neue', sans-serif;
-  background-color: #F4F4F7;
+  background-color: rgb(109, 109, 109);
 }
 
 h1 {
@@ -71,4 +71,13 @@ a.link-unstyled:hover {
 
 .btn.btn-danger:not(:disabled):not(.disabled):focus {
   box-shadow: 0 0 0 0.2rem rgba(255, 64, 64, 0.5);
+}
+
+.custom-color{
+  color: rgb(38, 151, 104);
+}
+
+.custom-bg {
+  background-color: rgb(38, 151, 104);
+  color: white;
 }

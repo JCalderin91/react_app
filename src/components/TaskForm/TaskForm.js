@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import firebase from "../../firebase/firebase";
 
-import { addTask } from "../../store/actions/tasks";
-
+import Tasks from "../Tasks/Tasks";
 
 class TaskForm extends Component {
+
+  constructor() {
+    super();
+    this.db_tasks = firebase.database().ref().child("users");
+  }
+
   state = {
     title: '',
     description: '',
@@ -12,16 +17,25 @@ class TaskForm extends Component {
 
   onSubmit = e => {
     e.preventDefault()
+    const container = document.getElementById("messages-container")
+    const created_at = new Date().toTimeString().split(" ")[0]    
     const payload = {
-      title: this.state.title,
-      description: this.state.description,
+      name: this.state.title,
+      email: this.state.description,
+      created_at: created_at
     }
-    this.props.addTask(payload)
-    this.setState({
-      title: '',
-      description: '',
+    this.db_tasks.push(payload, function() {
+      console.log(payload);      
+      container.scrollTo(0, container.scrollHeight)
+      console.log("Data has been insert")            
     })
+    this.setState({
+      description: ''
+    })
+    
   }
+
+
 
   onChange = e => {
     const { name , value } = e.target;
@@ -32,31 +46,27 @@ class TaskForm extends Component {
 
   render(){
     return (
-      <form className="py-3" onSubmit={this.onSubmit}>
-        <h5>Create a task</h5>
-        <div className="input-group">
-          <input name="title" type="text" className="form-control" onChange={this.onChange} value={this.state.title} placeholder="Task title"/>
-        </div>
-        <div className="input-group">
-          <textarea name="description" className="form-control" onChange={this.onChange} value={this.state.description} placeholder="Task description" aria-label="With textarea"></textarea>
-        </div>
-        <div className="input-group">
-          <button type="submit" className="btn btn-success mt-3">Save a task</button>
-        </div>
-      </form>
+      <>
+        <form className="py-3" onSubmit={this.onSubmit}>
+          <h5 className="custom-color"><b>Chat room</b></h5>
+          <div className="form-group">
+            <label>Username</label>
+            <input name="title" type="text" required className="form-control" onChange={this.onChange} value={this.state.title} placeholder="Your username"/>
+          </div>
+
+          <Tasks user={this.state.title}/>
+
+        
+          <div className="input-group">
+            <input name="description" required className="form-control" onChange={this.onChange} value={this.state.description} placeholder="Message textarea"></input>
+            <div className="input-group-append">
+              <button type="submit" className="btn custom-bg px-3">➤</button>
+            </div>
+          </div> 
+        </form>      
+      </>
     )
   }
 }
 
-
-const mapDispatchToProps = dispatch => {
-  return {
-    addTask(payload){
-      dispatch(addTask(payload))
-    }
-  }
-}
-
-
-
-export default connect(null, mapDispatchToProps)(TaskForm);
+export default TaskForm;

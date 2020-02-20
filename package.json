@@ -5,6 +5,7 @@
   "homepage": "https://JCalderin91.github.io/react_app",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "firebase": "^7.8.1",
     "gh-pages": "^2.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -15,6 +16,7 @@
   },
   "scripts": {
     "deploy": "gh-pages -d build",
+    "deploy -f": "npm run build&&gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

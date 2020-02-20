@@ -1,23 +1,16 @@
-import { ADD_TASK } from "../types/tasks";
+import { CREATE_TASK, DELETE_TASK, READ_TASK, LIST_TASKS } from "../types/tasks";
+
+
 
 const initialState = {
-  tasks: [{
-    "id": 0,
-    "title": "Task 1",
-    "description": "Laboris culpa qui veniam irure occaecat duis magna eu nisi irure quis eu.\r\n",
-    "done": true
-  }, {
-    "id": 1,
-    "title": "Task 2",
-    "description": "Laboris culpa qui veniam irure occaecat duis magna eu nisi irure quis eu.\r\n",
-    "done": false
-  }]
+  tasks: [],
+  task: {},
 }
 
 
 const tasks  = (state = initialState, { type, payload }) => {
   switch (type) {
-    case ADD_TASK:
+    case CREATE_TASK:
       return { 
         ...state,
         tasks: [...state.tasks, {
@@ -27,11 +20,28 @@ const tasks  = (state = initialState, { type, payload }) => {
           done: false
         }]
       }
+
+    case LIST_TASKS:    
+  
+      return {
+        ...state,
+        tasks: payload
+      }     
     
-    case 'REMOVE_TASK':
+    case DELETE_TASK:
       return {
         ...state,
         tasks: state.tasks.filter(task=>task.id !== payload)
+      }
+    
+    case READ_TASK:
+      let task = {}
+      if(payload)
+        task = state.tasks.find(task => task.id === payload)
+
+      return {
+        ...state,
+        task
       }
 
     case 'TOGGLE_TASK':    
